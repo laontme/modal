@@ -85,9 +85,9 @@ export const CoreUtil = {
   },
 
   openHref(href: string, target: '_blank' | '_self') {
-    // window.open(href, target, 'noreferrer noopener')
-    void target
-    window.Telegram.WebApp.openLink(href)
+    window.open(href, target, 'noreferrer noopener')
+    // void target
+    // window.Telegram.WebApp.openLink(href)
   },
 
   setWalletConnectDeepLink(href: string, name: string) {
