@@ -29,10 +29,10 @@ export class WcmMobileConnectingView extends LitElement {
 
     if (nativeUrl && !forceUniversalUrl) {
       const href = CoreUtil.formatNativeUrl(nativeUrl, uri, name)
-      CoreUtil.openHref(href, '_blank')
+      CoreUtil.openHref(href, '_self')
     } else if (universalUrl) {
       const href = CoreUtil.formatUniversalUrl(universalUrl, uri, name)
-      CoreUtil.openHref(href, '_blank')
+      CoreUtil.openHref(href, '_self')
     }
   }
 
