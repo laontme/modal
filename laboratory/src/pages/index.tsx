@@ -107,7 +107,7 @@ export default function WithEthereumProvider() {
               </>
             ) : (
               <Button shadow color="primary" onPress={onConnect}>
-                Connect
+                я ща умру
               </Button>
             )}
           </Card.Body>
