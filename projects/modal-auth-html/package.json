@@ -1,6 +1,6 @@
 {
-  "name": "@walletconnect/modal-auth-html",
-  "version": "2.7.0",
+  "name": "@laontme/modal-auth-html",
+  "version": "2.6.2",
   "main": "dist/index.js",
   "unpkg": "dist/cdn/bundle.js",
   "type": "module",
@@ -18,8 +18,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@walletconnect/auth-client": "2.1.1",
-    "@walletconnect/modal": "^2.7.0"
+    "@laontme/auth-client": "2.1.1",
+    "@laontme/modal": "^2.6.2"
   },
   "keywords": [
     "web3",
@@ -29,14 +29,14 @@
     "auth",
     "html"
   ],
-  "author": "WalletConnect <walletconnect.com>",
+  "author": "Stanislav Smirnov <yo@laont.me>",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/walletconnect/modal",
+  "homepage": "https://github.com/laontme/modal",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/walletconnect/modal.git"
+    "url": "git+https://github.com/laontme/modal.git"
   },
   "bugs": {
-    "url": "https://github.com/walletconnect/modal/issues"
+    "url": "https://github.com/laontme/modal/issues"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "@walletconnect/modal-sign-react",
-  "version": "2.7.0",
+  "name": "@laontme/modal-sign-react",
+  "version": "2.6.2",
   "main": "dist/index.js",
   "type": "module",
   "types": "dist/_types/index.d.ts",
@@ -17,7 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@walletconnect/modal-sign-html": "^2.7.0",
+    "@laontme/modal-sign-html": "^2.6.2",
     "mitt": "3.0.1"
   },
   "peerDependencies": {
@@ -32,14 +32,14 @@
     "sign",
     "react"
   ],
-  "author": "WalletConnect <walletconnect.com>",
+  "author": "Stanislav Smirnov <yo@laont.me>",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/walletconnect/modal",
+  "homepage": "https://github.com/laontme/modal",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/walletconnect/modal.git"
+    "url": "git+https://github.com/laontme/modal.git"
   },
   "bugs": {
-    "url": "https://github.com/walletconnect/modal/issues"
+    "url": "https://github.com/laontme/modal/issues"
   }
 }
