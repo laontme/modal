@@ -18,7 +18,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@laontme/auth-client": "2.1.1",
+    "@walletconnect/auth-client": "2.1.1",
     "@laontme/modal": "^2.6.2"
   },
   "keywords": [
