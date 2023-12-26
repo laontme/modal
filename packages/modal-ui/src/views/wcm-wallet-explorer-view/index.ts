@@ -90,11 +90,11 @@ export class WcmWalletExplorerView extends LitElement {
   }
 
   private onConnect(listing: Listing) {
-    if (CoreUtil.isAndroid()) {
-      UiUtil.handleMobileLinking(listing)
-    } else {
+    // if (CoreUtil.isAndroid()) {
+    //   UiUtil.handleMobileLinking(listing)
+    // } else {
       UiUtil.goToConnectingView(listing)
-    }
+    // }
   }
 
   private onSearchChange(event: Event) {

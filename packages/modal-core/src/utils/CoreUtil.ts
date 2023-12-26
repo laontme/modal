@@ -29,7 +29,7 @@ export const CoreUtil = {
   },
 
   isAndroid() {
-    return CoreUtil.isMobile() && navigator.userAgent.toLowerCase().includes('android')
+    return false
   },
 
   isIos() {
