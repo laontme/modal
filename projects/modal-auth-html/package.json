@@ -1,6 +1,6 @@
 {
   "name": "@laontme/modal-auth-html",
-  "version": "2.6.2-1",
+  "version": "2.6.2",
   "main": "dist/index.js",
   "unpkg": "dist/cdn/bundle.js",
   "type": "module",
@@ -18,7 +18,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@laontme/modal": "^2.6.2-1",
+    "@laontme/modal": "^2.6.2",
     "@walletconnect/auth-client": "2.1.1"
   },
   "keywords": [
