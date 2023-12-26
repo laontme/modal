@@ -6,7 +6,10 @@ import { Children } from 'react'
 export default function Document() {
   return (
     <Html>
-      <Head>{CssBaseline.flush()}</Head>
+      <Head>
+        <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        {CssBaseline.flush()}
+      </Head>
       <body>
         <Main />
         <NextScript />
