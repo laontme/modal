@@ -18,8 +18,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@walletconnect/auth-client": "2.1.1",
-    "@laontme/modal": "^2.6.2"
+    "@laontme/modal": "^2.6.2",
+    "@walletconnect/auth-client": "2.1.1"
   },
   "keywords": [
     "web3",
