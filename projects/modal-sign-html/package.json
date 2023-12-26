@@ -1,6 +1,6 @@
 {
   "name": "@laontme/modal-sign-html",
-  "version": "2.6.2",
+  "version": "2.6.4",
   "main": "dist/index.js",
   "unpkg": "dist/cdn/bundle.js",
   "type": "module",
@@ -18,7 +18,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@laontme/modal": "^2.6.2",
+    "@laontme/modal": "^2.6.4",
     "@walletconnect/sign-client": "2.10.0"
   },
   "keywords": [
