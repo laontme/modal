@@ -36,7 +36,7 @@ export class WcmMobileConnectingView extends LitElement {
     }
   }
 
-  private openMobileApp(forceUniversalUrl = false) {
+  private openMobileApp(forceUniversalUrl = true) {
     const { walletConnectUri } = OptionsCtrl.state
     const routerData = CoreUtil.getWalletRouterData()
     UiUtil.setRecentWallet(routerData)

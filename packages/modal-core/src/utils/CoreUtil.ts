@@ -1,5 +1,15 @@
 import { RouterCtrl } from '../controllers/RouterCtrl'
 
+declare global {
+  interface Window {
+    Telegram: {
+      WebApp: {
+        openLink(href: string): void;
+      };
+    };
+  }
+}
+
 export const CoreUtil = {
   WALLETCONNECT_DEEPLINK_CHOICE: 'WALLETCONNECT_DEEPLINK_CHOICE',
 
@@ -75,7 +85,9 @@ export const CoreUtil = {
   },
 
   openHref(href: string, target: '_blank' | '_self') {
-    window.open(href, target, 'noreferrer noopener')
+    // window.open(href, target, 'noreferrer noopener')
+    void target
+    window.Telegram.WebApp.openLink(href)
   },
 
   setWalletConnectDeepLink(href: string, name: string) {
