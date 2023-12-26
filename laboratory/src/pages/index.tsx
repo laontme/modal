@@ -1,159 +1,118 @@
-import { Badge, Button, Card, Container, Divider, Grid, Link, Text } from '@nextui-org/react'
+import { Button, Card, Loading, Spacer } from '@nextui-org/react'
+import { EthereumProvider } from '@walletconnect/ethereum-provider'
+import type { EthereumProvider as IEthereumProvider } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
+import { DEMO_SIGN_REQUEST } from 'laboratory/src/data/Constants'
+import { useEffect, useState } from 'react'
+import { NotificationCtrl } from '../../controllers/NotificationCtrl'
+import { getProjectId, getTheme } from '../../utilities/EnvUtil'
+import { getErrorMessage, showErrorToast } from '../../utilities/ErrorUtil'
 
-const reactCards = [
-  {
-    title: 'With Sign API',
-    description: 'Sign modal playground',
-    link: '/with-sign-api/react',
-    color: 'primary',
-    libraries: ['@web3modal/sign-react']
-  },
-  {
-    title: 'With Auth Api',
-    description: 'Auth modal playground',
-    link: '/with-auth-api/react',
-    color: 'success',
-    libraries: ['@web3modal/auth-react']
+export default function WithEthereumProvider() {
+  const [providerClient, setProviderClient] = useState<IEthereumProvider | undefined>(undefined)
+  const [session, setSession] = useState<boolean>(false)
+  const [disconnecting, setDisconnecting] = useState<boolean>(false)
+
+  async function onInitializeProviderClient() {
+    const client = await EthereumProvider.init({
+      projectId: getProjectId(),
+      showQrModal: true,
+      qrModalOptions: { themeMode: getTheme() },
+      chains: [1],
+      methods: ['eth_sendTransaction', 'personal_sign'],
+      events: ['connect', 'disconnect']
+    })
+    if (client.session) {
+      setSession(true)
+    }
+    setProviderClient(client)
   }
-] as const
 
-const htmlCards = [
-  {
-    title: 'With Sign API',
-    description: 'Sign modal playground',
-    link: '/with-sign-api/html',
-    color: 'primary',
-    libraries: ['@web3modal/sign-html']
-  },
-  {
-    title: 'With Auth API',
-    description: 'Auth modal playground',
-    link: '/with-auth-api/html',
-    color: 'success',
-    libraries: ['@web3modal/auth-html']
+  async function onConnect() {
+    if (providerClient) {
+      try {
+        await providerClient.connect()
+        setSession(true)
+        NotificationCtrl.open('Connect', JSON.stringify(providerClient.session, null, 2))
+      } catch (error) {
+        const message = getErrorMessage(error)
+        showErrorToast(message)
+      }
+    } else {
+      showErrorToast('providerClient is not initialized')
+    }
   }
-] as const
 
-const modalCards = [
-  {
-    title: 'With Ethereum Provider',
-    description: 'Ethereum Provider playground',
-    link: '/with-ethereum-provider',
-    color: 'primary',
-    libraries: ['@walletconnect/ethereum-provider', '@walletconnect/modal']
+  async function onDisconnect() {
+    if (!disconnecting) {
+      if (providerClient) {
+        setDisconnecting(true)
+        try {
+          await providerClient.disconnect()
+        } catch (error) {
+          const message = getErrorMessage(error)
+          showErrorToast(message)
+        }
+        setDisconnecting(false)
+        setSession(false)
+      } else {
+        showErrorToast('providerClient is not initialized')
+      }
+    }
   }
-] as const
 
-export default function HomePage() {
+  async function onSignMessage() {
+    if (providerClient?.session) {
+      try {
+        const { request } = DEMO_SIGN_REQUEST(
+          providerClient.session.topic,
+          providerClient.accounts[0]
+        )
+        const result = await providerClient.request(request)
+        NotificationCtrl.open('Sign Message', JSON.stringify(result, null, 2))
+      } catch (error) {
+        const message = getErrorMessage(error)
+        showErrorToast(message)
+      }
+    } else {
+      showErrorToast('providerClient is not initialized')
+    }
+  }
+
+  useEffect(() => {
+    if (providerClient) {
+      providerClient.on('disconnect', () => {
+        setSession(false)
+      })
+    }
+  }, [providerClient])
+
+  useEffect(() => {
+    onInitializeProviderClient()
+  }, [])
+
   return (
     <>
-      <Container css={{ maxWidth: '940px', margin: '50px auto 0' }}>
-        <Text h3 color="gray">
-          React Playgrounds
-        </Text>
-        <Divider />
-      </Container>
-      <Grid.Container gap={2} css={{ maxWidth: '940px', margin: '0 auto' }}>
-        {reactCards.map(card => (
-          <Grid xs={12} sm={6} key={card.title}>
-            <Card key={card.title} variant="bordered">
-              <Card.Body>
-                <Text h3 color={card.color}>
-                  {card.title}
-                </Text>
-                <Text color="grey">{card.description}</Text>
-                <Divider y={1} />
-                <Grid.Container alignItems="center" gap={0.5}>
-                  {card.libraries.map(library => (
-                    <Grid key={library}>
-                      <Badge variant="bordered" color={card.color} size="sm">
-                        {library}
-                      </Badge>
-                    </Grid>
-                  ))}
-                </Grid.Container>
-              </Card.Body>
-              <Card.Footer>
-                <Link href={card.link}>
-                  <Button color={card.color}>Go to playground</Button>
-                </Link>
-              </Card.Footer>
-            </Card>
-          </Grid>
-        ))}
-      </Grid.Container>
-
-      <Container css={{ maxWidth: '940px', margin: '50px auto 0' }}>
-        <Text h3 color="gray">
-          Html Playgrounds
-        </Text>
-        <Divider />
-      </Container>
-
-      <Grid.Container gap={2} css={{ maxWidth: '940px', margin: '0 auto' }}>
-        {htmlCards.map(card => (
-          <Grid xs={12} sm={6} key={card.title}>
-            <Card key={card.title} variant="bordered">
-              <Card.Body>
-                <Text h3 color={card.color}>
-                  {card.title}
-                </Text>
-                <Text color="grey">{card.description}</Text>
-                <Grid.Container alignItems="center" gap={0.5}>
-                  {card.libraries.map(library => (
-                    <Grid key={library}>
-                      <Badge variant="bordered" color={card.color} size="sm">
-                        {library}
-                      </Badge>
-                    </Grid>
-                  ))}
-                </Grid.Container>
-              </Card.Body>
-              <Card.Footer>
-                <Link href={card.link}>
-                  <Button color={card.color}>Go to playground</Button>
-                </Link>
-              </Card.Footer>
-            </Card>
-          </Grid>
-        ))}
-      </Grid.Container>
-
-      <Container css={{ maxWidth: '940px', margin: '50px auto 0' }}>
-        <Text h3 color="gray">
-          WalletConnectModal Playgrounds
-        </Text>
-        <Divider />
-      </Container>
-
-      <Grid.Container gap={2} css={{ maxWidth: '940px', margin: '0 auto' }}>
-        {modalCards.map(card => (
-          <Grid xs={12} sm={6} key={card.title}>
-            <Card key={card.title} variant="bordered">
-              <Card.Body>
-                <Text h3 color={card.color}>
-                  {card.title}
-                </Text>
-                <Text color="grey">{card.description}</Text>
-                <Grid.Container alignItems="center" gap={0.5}>
-                  {card.libraries.map(library => (
-                    <Grid key={library}>
-                      <Badge variant="bordered" color={card.color} size="sm">
-                        {library}
-                      </Badge>
-                    </Grid>
-                  ))}
-                </Grid.Container>
-              </Card.Body>
-              <Card.Footer>
-                <Link href={card.link}>
-                  <Button color={card.color}>Go to playground</Button>
-                </Link>
-              </Card.Footer>
-            </Card>
-          </Grid>
-        ))}
-      </Grid.Container>
+      {providerClient && (
+        <Card css={{ maxWidth: '400px', margin: '100px auto' }} variant="bordered">
+          <Card.Body css={{ justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+            {session ? (
+              <>
+                <Button shadow color="primary" onPress={onSignMessage}>
+                  Sign Message
+                </Button>
+                <Spacer />
+                <Button shadow color="error" onPress={onDisconnect} disabled={disconnecting}>
+                  {disconnecting ? <Loading size="xs" color={'white'} /> : 'Disconnect'}
+                </Button>
+              </>
+            ) : (
+              <Button shadow color="primary" onPress={onConnect}>
+                Connect
+              </Button>
+            )}
+          </Card.Body>
+        </Card>
+      )}
     </>
   )
 }
