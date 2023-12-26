@@ -3,9 +3,9 @@ import { EthereumProvider } from '@walletconnect/ethereum-provider'
 import type { EthereumProvider as IEthereumProvider } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
 import { DEMO_SIGN_REQUEST } from 'laboratory/src/data/Constants'
 import { useEffect, useState } from 'react'
-import { NotificationCtrl } from '../../controllers/NotificationCtrl'
-import { getProjectId, getTheme } from '../../utilities/EnvUtil'
-import { getErrorMessage, showErrorToast } from '../../utilities/ErrorUtil'
+import { NotificationCtrl } from '../controllers/NotificationCtrl'
+import { getProjectId, getTheme } from '../utilities/EnvUtil'
+import { getErrorMessage, showErrorToast } from '../utilities/ErrorUtil'
 
 export default function WithEthereumProvider() {
   const [providerClient, setProviderClient] = useState<IEthereumProvider | undefined>(undefined)
