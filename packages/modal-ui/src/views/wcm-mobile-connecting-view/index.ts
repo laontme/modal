@@ -72,7 +72,7 @@ export class WcmMobileConnectingView extends LitElement {
 
       <wcm-info-footer class="wcm-note">
         <wcm-platform-selection .isWeb=${isWeb} .isRetry=${true}>
-          <wcm-button .onClick=${() => this.openMobileApp(false)} .iconRight=${SvgUtil.RETRY_ICON}>
+          <wcm-button .onClick=${() => this.openMobileApp(true)} .iconRight=${SvgUtil.RETRY_ICON}>
             Retry
           </wcm-button>
         </wcm-platform-selection>
